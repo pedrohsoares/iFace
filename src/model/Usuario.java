@@ -88,6 +88,17 @@ public class Usuario {
 	public void setListSolicitacaoAmizade(ArrayList<Usuario> listSolicitacaoAmizade) {
 		this.listSolicitacaoAmizade = listSolicitacaoAmizade;
 	}
+	
+	public ArrayList<Mensagem> getListMensagensByUser(Usuario remetente){
+		ArrayList<Mensagem> listMensagem = new ArrayList<Mensagem>();
+		
+		for(Mensagem mensagem : this.listMensagens){
+			if(mensagem.getUsuario().equals(remetente))
+				listMensagem.add(mensagem);
+		}
+		
+		return listMensagem;
+	}
 
 	public ArrayList<Mensagem> getListMensagens() {
 		return listMensagens;

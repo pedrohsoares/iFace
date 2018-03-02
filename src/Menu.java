@@ -1,7 +1,9 @@
 
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import model.Mensagem;
 import model.RedeRelacionamento;
 import model.Usuario;
 
@@ -111,7 +113,7 @@ public class Menu {
 		}
 	}
 	
-	public void visualizarMensagens(Usuario usuarioAtivo){
+	public void visualizarMensagens(Usuario usuarioAtivo,RedeRelacionamento redeRelacionamento){
 		Scanner input = new Scanner(System.in);
 		
 		System.out.println("Voce deseja visualizar as mensagens de:");
@@ -127,6 +129,15 @@ public class Menu {
 		if(opcao == 1){
 			System.out.println("Digite o email do usuario:");
 			String email = input.nextLine();
+			
+			Usuario remetente = redeRelacionamento.getUsuario(email);
+			
+			ArrayList<Mensagem> listMensagem = usuarioAtivo.getListMensagensByUser(remetente);
+			
+			System.out.println("Mensagens enviadas por " + remetente.getNome());
+			for(Mensagem mensagem : listMensagem){
+				System.out.println("Mensagem: " + mensagem.getDescricao());
+			}
 		}else{
 			System.out.println("Digite o nome da comunidade:");
 			String nome = input.nextLine();
