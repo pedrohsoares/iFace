@@ -109,9 +109,9 @@ public class RedeRelacionamento {
 					}
 					
 					return true;
-				}else{
-					return false;
 				}
+				
+				return false;
 			}
 		}
 		
