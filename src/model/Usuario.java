@@ -108,18 +108,6 @@ public class Usuario {
 		this.listMensagens = listMensagens;
 	}
 	
-	public boolean aceitarSolicitacaoAmizade(Usuario usuario){
-		for(Usuario iterator : this.listSolicitacaoAmizade){
-			if(iterator.equals(usuario)){
-				this.listSolicitacaoAmizade.remove(iterator);
-				this.listAmigos.add(usuario);
-				return true;
-			}	
-		}
-		
-		return false;
-	}
-	
 	public void editarPerfil(String novoValor, int opcao){
 		if(opcao == 1){
 			this.perfilUsuario.setCidade(novoValor);

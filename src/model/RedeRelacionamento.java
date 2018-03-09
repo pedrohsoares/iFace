@@ -91,19 +91,27 @@ public class RedeRelacionamento {
 		return true;
 	}
 	
-	public boolean reativarUsuario(Usuario usuario){
-		if(this.listUsuariosRemovidos.contains(usuario)){
-			this.listUsuariosRemovidos.remove(usuario);
-			this.listUsuarios.add(usuario);
-			
-			for(Usuario iterator : this.listUsuarios){
-				if(usuario.getListAmigos().contains(iterator))
-					iterator.getListAmigos().add(usuario);
-			}
-			
-			for(Comunidade iterator : this.listComunidades){
-				if(usuario.getListComunidades().contains(iterator))
-					iterator.getListParticipantes().add(usuario);
+	public boolean reativarUsuario(String email, String senha){
+		for(Usuario usuario : this.listUsuariosRemovidos){
+			if(usuario.getEmail().equals(email)){
+				if(usuario.getSenha().equals(senha)){
+					this.listUsuarios.add(usuario);
+					this.listUsuariosRemovidos.remove(usuario);
+					
+					for(Usuario iterator : this.listUsuarios){
+						if(usuario.getListAmigos().contains(iterator))
+							iterator.getListAmigos().add(usuario);
+					}
+					
+					for(Comunidade iterator : this.listComunidades){
+						if(usuario.getListComunidades().contains(iterator))
+							iterator.getListParticipantes().add(usuario);
+					}
+					
+					return true;
+				}else{
+					return false;
+				}
 			}
 		}
 		
@@ -144,5 +152,49 @@ public class RedeRelacionamento {
 		
 		return false;
 	}
+	
+	public void cadastrarComunidade(Usuario usuarioAtivo, String nome, String descricao) {
+		int id;
+		
+		if(this.listComunidades.size() > 0)
+			id = this.listComunidades.get(this.listComunidades.size()-1).getId() + 1;
+		else
+			id = 1;
+		
+		
+		Comunidade novaComunidade = new Comunidade(id, usuarioAtivo, nome, descricao);
+		this.listComunidades.add(novaComunidade);
+		usuarioAtivo.getListComunidades().add(novaComunidade);
+	}
+	
+	public boolean entrarComunidade(Usuario usuarioAtivo, String nome){
+		for(Comunidade comunidade : this.listComunidades){
+			if(comunidade.getNome().equals(nome)){
+				comunidade.getListParticipantes().add(usuarioAtivo);
+				
+				for(Usuario usuario : this.listUsuarios)
+					if(usuario.equals(usuarioAtivo))
+						usuario.getListComunidades().add(comunidade);
+				
+				usuarioAtivo.getListComunidades().add(comunidade);
+				
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean aceitarSolicitacaoAmizade(Usuario usuarioSolicitante, Usuario usuarioAtivo){
+		if(usuarioSolicitante == null)
+			return false;
+		
+		usuarioAtivo.getListSolicitacaoAmizade().remove(usuarioSolicitante);
+		usuarioAtivo.getListAmigos().add(usuarioSolicitante);
+		usuarioSolicitante.getListAmigos().add(usuarioAtivo);
+		
+		return true;
+	}
+	
 	
 }

@@ -7,8 +7,14 @@ public class Perfil {
 	private Calendar dataNascimento;
 	private String descricao;
 	
-	public Perfil() {
-		
+	public Perfil(String cidade, Calendar dataNascimento, String descricao) {
+		this.cidade = cidade;
+		this.dataNascimento = dataNascimento;
+		this.descricao = descricao;
+	}
+	
+	public Perfil(){
+		this.dataNascimento = null;
 	}
 	
 	public String getCidade() {
@@ -30,6 +36,17 @@ public class Perfil {
 		this.descricao = descricao;
 	}
 	
-	
+	public int getIdade() {
+		if(dataNascimento != null) {
+			Calendar now = Calendar.getInstance();
+			
+			long millis = now.getTimeInMillis() - dataNascimento.getTimeInMillis();
+			
+			now.setTimeInMillis(millis);
+			return now.get(Calendar.YEAR);
+		}
+		
+		return 0;
+	}
 	
 }

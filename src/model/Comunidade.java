@@ -6,12 +6,14 @@ public class Comunidade {
 	private int id;
 	private String nome;
 	private String descricao;
+	private Usuario usuario;
 	private ArrayList<Usuario> listParticipantes;
 	private ArrayList<Mensagem> listMensagens;
 	
 
-	public Comunidade(int id, String nome, String descricao) {
+	public Comunidade(int id, Usuario usuario, String nome, String descricao) {
 		this.id = id;
+		this.usuario = usuario;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.listParticipantes = new ArrayList<Usuario>();
@@ -37,6 +39,13 @@ public class Comunidade {
 		this.nome = nome;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	public String getDescricao() {
 		return descricao;
